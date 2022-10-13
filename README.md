@@ -10,7 +10,7 @@ Use Vagrant to create the VM:
 
 Remember to chage the interface for the public ip on the Vagrant file:
 
-    config.vm.network "public_network", type: "dhcp", bridge: "enp3s0"
+    config.vm.network "public_network", type: "dhcp", bridge: "<network_interface>"
 
 ## Provvisioning the VM
 The install process behind Jenkins has been automated via the [Ansible](https://www.redhat.com/en/technologies/management/ansible).
