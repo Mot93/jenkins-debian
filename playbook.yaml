@@ -1,0 +1,38 @@
+---
+- name: This is a hello-world example
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Installing gnupg
+      ansible.builtin.apt:
+        name: gnupg
+        state: present
+
+    - name: Install openjdk-11-jre
+      ansible.builtin.apt:
+        name: openjdk-11-jre
+        state: present
+
+    - name: Adding Jenkins repo key
+      ansible.builtin.apt_key:
+        url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
+        state: present
+
+    - name: Adding Jenkins LTS repo
+      ansible.builtin.apt_repository:
+        repo: deb https://pkg.jenkins.io/debian-stable binary/
+        state: present
+
+    - name: Installing Jenkins server
+      ansible.builtin.apt:
+        name: jenkins
+        state: present
+
+    - name: Getting the initial Jenkins password
+      command: cat /var/lib/jenkins/secrets/initialAdminPassword
+      register: jenkins_pasword
+
+    - name: Displaying the initial Jenkins password
+      debug:
+        msg: "{{ jenkins_pasword.stdout }}"
