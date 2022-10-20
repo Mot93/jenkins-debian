@@ -29,10 +29,9 @@
         name: jenkins
         state: present
 
-    - name: Getting the initial Jenkins password
-      command: cat /var/lib/jenkins/secrets/initialAdminPassword
-      register: jenkins_pasword
+    - name: Getting the file with the initial password
+      ansible.builtin.fetch:
+        src: /var/lib/jenkins/secrets/initialAdminPassword
+        dest: "./initialAdminPassword/{{ inventory_hostname }}/"
+        flat: yes
 
-    - name: Displaying the initial Jenkins password
-      debug:
-        msg: "{{ jenkins_pasword.stdout }}"
