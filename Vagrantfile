@@ -8,7 +8,7 @@
 Vagrant.configure("2") do |config|
 
   #
-  # Upgrading the servers to the latest versions
+  # Upgrading the server to the latest versions
   #
   config.vm.provision "shell", inline: <<-SHELL
     apt update
@@ -16,12 +16,9 @@ Vagrant.configure("2") do |config|
   SHELL
 
   #
-  # Run Ansible from the Vagrant Host ron install redis
+  # Run Ansible from the Vagrant host to install jenkins
   #
   config.vm.provision "ansible" do |ansible|
-    ansible.groups = {
-      "redis_replica" => ["redis_replica_1", "redis_replica_2"]
-    }
     ansible.playbook = "playbook.yaml"
   end
 
@@ -31,7 +28,7 @@ Vagrant.configure("2") do |config|
   config.vm.box = "debian/bullseye64"
   #config.vm.box = "ubuntu/focal64"
   config.vm.hostname = "jenkins"
-  #config.vm.network "public_network", type: "dhcp", bridge: "enp3s0"
+  #config.vm.network "public_network", type: "dhcp", bridge: ""
   config.vm.network "forwarded_port", guest: 8080, host: 8080, protocol: "tcp"
 
 end
