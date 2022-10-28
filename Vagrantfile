@@ -30,5 +30,10 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = "jenkins"
   #config.vm.network "public_network", type: "dhcp", bridge: ""
   config.vm.network "forwarded_port", guest: 8080, host: 8080, protocol: "tcp"
+  # Jenkins is a resource heavy, setting up the recommended ammount
+  config.vm.provider "virtualbox" do |vb|
+    vb.cpus   = 4
+    vb.memory = "2048"
+  end
 
 end
